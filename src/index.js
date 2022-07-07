@@ -38,7 +38,7 @@ const store = createStore(reducer);
 // state = reducer(state, {type: 'INC'});
 // state = reducer(state, {type: 'INC'});
 // state = reducer(state, {type: 'INC'});
-// console.log(state);
+// console.log(state);// here we get state and with help of reducer we change the state, so DISPATCH function do exactly the same thing!!! WE can be sure that we work with right state value and in right order!!!
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
