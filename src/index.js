@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createStore, bindActionCreators } from 'redux';
+import { createStore } from 'redux';
 //import { inc, dec, rnd} from './actions'; => 
-import * as actions from './actions'; // just for object notation and thet use this object in bindActionCreator
+// import * as actions from './actions'; // just for object notation and thet use this object in bindActionCreator
 import reducer from './reducer';
+import App from './components/App';
+import { Provider } from 'react-redux';
 
 const store = createStore(reducer);
-const { dispatch, subscribe, getState } = store;
+// const { dispatch, getState } = store; => we will use it in childerns(check step by step in github commits)
 
-const update = () => {
-    document.getElementById('counter').textContent = getState().value;
-}
 
 // here we trying to ubderstand all redux flow and all functions under the hood of redux
 // const incDispatch = () => dispatch(inc());
@@ -30,18 +29,8 @@ const update = () => {
 
 
 
-const { inc, dec, rnd } = bindActionCreators(actions, dispatch) // here it is how redux works
+// const { inc, dec, rnd } = bindActionCreators(actions, dispatch) // here it is how redux works // the same - will use in in childerns
 
-subscribe(update);
-
-document.getElementById('inc').addEventListener('click', inc);
-
-document.getElementById('dec').addEventListener('click', dec);
-
-document.getElementById('rnd').addEventListener('click', () => {
-    const value = Math.floor(Math.random() * 10);
-    rnd(value);
-});
 
 
 
@@ -55,7 +44,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <>
-
+      {/* <Counter value={getState().value} inc={inc} rnd={() => {
+        const randomValue = Math.floor(Math.random() * 10);
+        rnd(randomValue);
+      }} dec={dec}/> */}
+      {/* Provider share all our store between all components-childrens, store holds all data, reducers, etc. Provider automaticly checks all updates of state and say - WE NEED UPDATEs */}
+      <Provider store={store}>
+        <App/>
+      </Provider>
     </>
   </React.StrictMode>
 );
